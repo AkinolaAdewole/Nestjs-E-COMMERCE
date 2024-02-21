@@ -7,8 +7,12 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post('signin')
-  signup(@Body() body:any){}
+  @Post('signup')
+  signup(@Body() body:any){
+    console.log(body);
+    return 'success'
+    
+  }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
