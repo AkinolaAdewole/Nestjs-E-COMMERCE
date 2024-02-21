@@ -1,9 +1,13 @@
 import { IsNotEmpty, IsString, IsEmail, MinLength } from "class-validator";
 
 export class UserSignUp {
-    @IsNotEmpty({ message: 'Name is empty' })
-    @IsString({ message: 'Name is string' })
-    name: string;
+    @IsNotEmpty({ message: 'Firstname is empty' })
+    @IsString({ message: 'Firstame is string' })
+    firstname: string;
+
+    @IsNotEmpty({ message: 'Lastame is empty' })
+    @IsString({ message: 'Lastname is string' })
+    lastname: string;
 
     @IsNotEmpty({ message: 'email is empty' })
     @IsEmail({}, { message: 'Please, provide a valid email' })
