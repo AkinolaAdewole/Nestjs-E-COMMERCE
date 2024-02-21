@@ -8,8 +8,9 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('signup')
-  signup(@Body() body:any){
-    console.log(body);
+  async signup(@Body() body:any){
+    return await this.usersService.signup(body)
+    // console.log(body);
     return 'success'
     
   }
