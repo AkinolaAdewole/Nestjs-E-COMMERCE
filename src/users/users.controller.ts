@@ -11,8 +11,6 @@ export class UsersController {
   async signup(@Body() body:any){
     return await this.usersService.signup(body)
     // console.log(body);
-    return 'success'
-    
   }
 
   @Post()
