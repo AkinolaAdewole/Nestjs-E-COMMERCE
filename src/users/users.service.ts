@@ -5,8 +5,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { UserSignUpDto } from './dto/user-signup.dto';
-import {hash} from 'bcrypt'
+import {hash, compare} from 'bcrypt'
 import { UserSignInDto } from './dto/user-signin.dto';
+import { sign } from 'jsonwebtoken';
 
 @Injectable()
 export class UsersService {
@@ -26,7 +27,12 @@ export class UsersService {
 
   async signin(userSignInDto:UserSignInDto){
     const userExists= await this.usersRepository.createQueryBuilder('users').addSelect('users.password')
-    .where('users.email=:email',{email:userSignInDto.email})
+    .where('users.email=:email',{email:userSignInDto.email}).getOne();
+    if(!userExists) throw new BadRequestException('Invalid Email or Password');
+    const matchPassword=await compare(userSignInDto.password, userExists.password);
+    if(!matchPassword) throw new BadRequestException('Invalid Email or Password');
+    delete userExists.password
+    return userExists;
   }
 
   create(createUserDto: CreateUserDto) {
@@ -51,5 +57,9 @@ export class UsersService {
 
   async findUserByEmail(email:string){
     return await this.usersRepository.findOneBy({email:email})
+  }
+
+  async accessToken(user:UserEntity){
+    return sign
   }
 }
