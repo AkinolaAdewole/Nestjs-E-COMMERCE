@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { UserSignUpDto } from './dto/user-signup.dto';
 import {hash} from 'bcrypt'
+import { UserSignInDto } from './dto/user-signin.dto';
 
 @Injectable()
 export class UsersService {
@@ -22,6 +23,8 @@ export class UsersService {
     const user=this.usersRepository.create(userSignUpDto);
     return await this.usersRepository.save(user)
   }
+
+  async signin(userSignInDto:UserSignInDto){}
 
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';
