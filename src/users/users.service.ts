@@ -60,6 +60,6 @@ export class UsersService {
   }
 
   async accessToken(user:UserEntity){
-    return sign
+    return sign({id:user.id, email:user.email})
   }
 }
