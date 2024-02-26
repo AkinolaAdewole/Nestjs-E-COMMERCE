@@ -60,6 +60,6 @@ export class UsersService {
   }
 
   async accessToken(user:UserEntity){
-    return sign({id:user.id, email:user.email})
+    return sign({id:user.id, email:user.email},process.env.ACCESS_TOKEN_SECRET_KEY,{expiresIn:process.env.ACCESS_TOKEN_EXPIRE_TIME})
   }
 }
