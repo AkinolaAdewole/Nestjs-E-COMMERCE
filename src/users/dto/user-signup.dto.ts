@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString, IsEmail, MinLength } from "class-validator";
 
-export class UserSignUp {
+export class UserSignUpDto {
     @IsNotEmpty({ message: 'Firstname is empty' })
     @IsString({ message: 'Firstame is string' })
     firstname: string;
