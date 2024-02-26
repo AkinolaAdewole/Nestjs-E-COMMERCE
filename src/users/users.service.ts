@@ -14,8 +14,8 @@ export class UsersService {
     private usersRepository: Repository<UserEntity>,
   ) {}
 
-  async signup(body:UserSignUp){
-    const user=this.usersRepository.create(body);
+  async signup(userSignUp:UserSignUp){
+    const user=this.usersRepository.create(userSignUp);
     return await this.usersRepository.save(user)
   }
 
