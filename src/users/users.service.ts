@@ -20,13 +20,13 @@ export class UsersService {
     const userExists= await this.findUserByEmail(userSignUpDto.email); 
     if(userExists) throw new BadRequestException('Email is not available');
     userSignUpDto.password = await hash(userSignUpDto.password,12)
-    const user=this.usersRepository.create(userSignUpDto);
+    let user=this.usersRepository.create(userSignUpDto);
     return await this.usersRepository.save(user)
   }
 
   async signin(userSignInDto:UserSignInDto){
-    const userExists= await this.findUserByEmail(userSignInDto.email); 
-    if(userExists) throw new BadRequestException('Email is not available');  
+    const userExists= await this.usersRepository.createQueryBuilder('users').addSelect('users.password')
+    .where('users.email=:email',{email:userSignInDto.email})
   }
 
   create(createUserDto: CreateUserDto) {
