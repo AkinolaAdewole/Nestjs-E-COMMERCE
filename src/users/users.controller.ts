@@ -15,6 +15,9 @@ export class UsersController {
     // console.log(body);
   }
 
+  @Post('signin')
+  async signin(){}
+
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     // return this.usersService.create(createUserDto);
