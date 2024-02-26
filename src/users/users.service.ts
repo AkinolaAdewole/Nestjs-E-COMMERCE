@@ -24,7 +24,10 @@ export class UsersService {
     return await this.usersRepository.save(user)
   }
 
-  async signin(userSignInDto:UserSignInDto){}
+  async signin(userSignInDto:UserSignInDto){
+    const userExists= await this.findUserByEmail(userSignInDto.email); 
+    if(userExists) throw new BadRequestException('Email is not available');  
+  }
 
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';

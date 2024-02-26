@@ -17,7 +17,9 @@ export class UsersController {
   }
 
   @Post('signin')
-  async signin(@Body() userSignInDto:UserSignInDto){}
+  async signin(@Body() userSignInDto:UserSignInDto){
+    return await this.usersService.signin(userSignInDto)
+  }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
