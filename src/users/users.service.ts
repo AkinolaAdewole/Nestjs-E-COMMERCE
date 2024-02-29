@@ -17,7 +17,7 @@ export class UsersService {
     private usersRepository: Repository<UserEntity>,
   ) {}
 
-  async signup(userSignUpDto:UserSignUpDto){
+  async signup(userSignUpDto:UserSignUpDto):Promise<UserEntity>{
     const userExists= await this.findUserByEmail(userSignUpDto.email); 
     if(userExists) throw new BadRequestException('Email is not available');
     userSignUpDto.password = await hash(userSignUpDto.password,12)
@@ -25,7 +25,7 @@ export class UsersService {
     return await this.usersRepository.save(user)
   }
 
-  async signin(userSignInDto:UserSignInDto){
+  async signin(userSignInDto:UserSignInDto):Promise<UserEntity>{
     const userExists= await this.usersRepository.createQueryBuilder('users').addSelect('users.password')
     .where('users.email=:email',{email:userSignInDto.email}).getOne();
     if(!userExists) throw new BadRequestException('Invalid Email or Password');
@@ -59,7 +59,7 @@ export class UsersService {
     return await this.usersRepository.findOneBy({email:email})
   }
 
-  async accessToken(user:UserEntity){
+  async accessToken(user:UserEntity):Promise<string>{
     return sign({id:user.id, email:user.email},process.env.ACCESS_TOKEN_SECRET_KEY,{expiresIn:process.env.ACCESS_TOKEN_EXPIRE_TIME})
   }
 }
