@@ -34,7 +34,7 @@ export class UsersController {
     return await this.usersService.findAll();
   }
 
-  @Get(':id')
+  @Get('single/:id')
   async findOne(@Param('id') id: string) {
     return await  this.usersService.findOne(+id);
   }
