@@ -6,23 +6,34 @@ import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class CurrentUserMiddleware implements NestMiddleware {
-    constructor(private readonly usersService:UsersService){}
-  async use(req: Request, res: Response, next: NextFunction) {
-    const authHeader = req.headers.authorization || req.headers.Authorization 
-    // console.log(req);
-    if(!authHeader || isArray(authHeader) || !authHeader.startsWith('Bearer ')){
-        // req.CurrentUser = null;
-        next()
-    }else{
-        const token = authHeader.split(' '[1] );
-        // console.log(token);
-        const {id} = verify(token, process.env.ACCESS_TOKEN_SECRET_KEY)
-        const currentUser = await this.usersService.findOne(+id)
-        next()   
+    constructor(private readonly usersService: UsersService) { }
+  
+    // This method is invoked for each incoming HTTP request
+    async use(req: Request, res: Response, next: NextFunction) {
+        // Extract the authorization header from the incoming request
+        const authHeader = req.headers.authorization || req.headers.Authorization;
+
+        // Check if the authorization header is missing, is an array, or does not start with 'Bearer '
+        if (!authHeader || isArray(authHeader) || !authHeader.startsWith('Bearer ')) {
+            // If any of the conditions are met, proceed with the next middleware in the chain
+            next();
+        } else {
+            // Extract the token from the authorization header
+            const token = authHeader.split(' ')[1];
+
+            // Decode the JWT token and extract the user's id from it
+            const { id } = verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
+
+            // Fetch the user associated with the extracted id from the UsersService
+            const currentUser = await this.usersService.findOne(+id);
+
+            // Pass control to the next middleware in the chain
+            next();
+        }
     }
-  }
 }
 
-interface JwtPayload{
-    id:string;
+// Interface representing the structure of the payload stored in the JWT token
+interface JwtPayload {
+    id: string;
 }
