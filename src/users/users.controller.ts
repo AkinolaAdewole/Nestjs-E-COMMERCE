@@ -35,7 +35,7 @@ export class UsersController {
   }
 
   @Get('single/:id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<UserEntity>{
     return await  this.usersService.findOne(+id);
   }
 
