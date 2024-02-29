@@ -29,14 +29,14 @@ export class UsersController {
     return 'hey'
   }
 
-  @Get()
+  @Get('all')
   async findAll():Promise<UserEntity[]> {
     return await this.usersService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await  this.usersService.findOne(+id);
   }
 
   @Patch(':id')

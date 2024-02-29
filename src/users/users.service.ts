@@ -43,8 +43,8 @@ export class UsersService {
     return await this.usersRepository.find()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    return await  `This action returns a #${id} user`;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
