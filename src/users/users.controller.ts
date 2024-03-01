@@ -41,7 +41,9 @@ export class UsersController {
   }
 
   @Get('me')
-  async getProfile(@CurrentUser() CurrentUser:UserEntity){}
+  async getProfile(@CurrentUser() CurrentUser:UserEntity){
+    return CurrentUser;
+  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {

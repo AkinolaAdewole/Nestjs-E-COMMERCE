@@ -25,19 +25,20 @@ export class CurrentUserMiddleware implements NestMiddleware {
         // Check if the authorization header is missing, is an array, or does not start with 'Bearer '
         if (!authHeader || isArray(authHeader) || !authHeader.startsWith('Bearer ')) {
             // If any of the conditions are met, proceed with the next middleware in the chain
-            req.currentUser = null
+            req.currentUser = null;
             next();
         } else {
             // Extract the token from the authorization header
             const token = authHeader.split(' ')[1];
-
             // Decode the JWT token and extract the user's id from it
             const { id } = <JwtPayload>verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
 
             // Fetch the user associated with the extracted id from the UsersService
             const currentUser = await this.usersService.findOne(+id);
-            req.currentUser = currentUser
-            console.log(currentUser);
+            req.currentUser = currentUser;
+            // console.log(currentUser);
+            // console.log(token);
+            
             
 
             // Pass control to the next middleware in the chain
