@@ -1,0 +1,37 @@
+
+In Nest.js, a parameter decorator is a special kind of decorator that can be applied to method parameters 
+in controllers or middleware to modify their behavior or inject additional information. 
+These decorators provide a way to access and manipulate parameters passed to controller methods or 
+middleware functions.
+
+There are several parameter decorators available in Nest.js, some of the common ones include @Req, @Res, 
+@Param, @Body, @Query, @Headers, etc. Each of these decorators serves a specific purpose and can be used 
+to access different parts of the incoming request.
+
+Here's a brief explanation of some of the common parameter decorators:
+
+@Req: This decorator allows you to inject the Express.js Request object into a method parameter. 
+You can use it to access information about the incoming HTTP request, such as headers, query parameters, 
+or request body.
+
+@Res: Similar to @Req, @Res decorator allows you to inject the Express.js Response object into a method 
+parameter. You can use it to manipulate the response sent back to the client.
+
+@Param(paramName?: string): This decorator is used to extract route parameters from the URL path. 
+You can optionally specify the name of the route parameter as an argument. If no argument is provided, 
+Nest.js will infer the parameter name based on the method parameter's name.
+
+@Body(propertyPath?: string): This decorator is used to extract the request body from the incoming HTTP 
+request. If you provide a property path as an argument, Nest.js will extract only the specified property 
+from the request body.
+
+@Query(queryName?: string): This decorator is used to extract query parameters from the URL query string. 
+You can optionally specify the name of the query parameter as an argument. If no argument is provided, 
+Nest.js will infer the parameter name based on the method parameter's name.
+
+@Headers(headerName?: string): This decorator is used to extract headers from the incoming HTTP request. 
+You can optionally specify the name of the header as an argument. If no argument is provided, Nest.js will 
+infer the parameter name based on the method parameter's name.
+
+These decorators make it easy to access and work with different parts of the incoming HTTP request within 
+your Nest.js application. They provide a clean and intuitive way to handle and process incoming data.

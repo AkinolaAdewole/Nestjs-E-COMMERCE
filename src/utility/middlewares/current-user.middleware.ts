@@ -50,3 +50,26 @@ export class CurrentUserMiddleware implements NestMiddleware {
 interface JwtPayload {
     id: string;
 }
+
+
+
+
+
+
+
+
+// declare global { ... }: This syntax is used in TypeScript to extend or modify global scope. 
+// It's typically used when adding or modifying types globally.
+
+// namespace Express { ... }: Here, we're defining a namespace Express. Namespaces are used to group related 
+// code together.
+
+// interface Request { ... }: Inside the Express namespace, we're extending the Request interface. 
+// The Request interface represents the HTTP request in Express.
+
+// currentUser?: UserEntity;: This line adds a new property currentUser to the Request interface. 
+// The currentUser property is of type UserEntity or undefined. The ? makes the property optional, 
+// meaning it doesn't have to be present in every Request object.
+
+// currentUser?: UserEntity;: This defines a property named currentUser that can hold an instance of 
+// the UserEntity type. The UserEntity likely represents data about the currently authenticated user.
