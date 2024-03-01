@@ -52,12 +52,6 @@ interface JwtPayload {
 }
 
 
-
-
-
-
-
-
 // declare global { ... }: This syntax is used in TypeScript to extend or modify global scope. 
 // It's typically used when adding or modifying types globally.
 
