@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserSignUpDto } from './dto/user-signup.dto';
 import { UserEntity } from './entities/user.entity';
 import { UserSignInDto } from './dto/user-signin.dto';
+import { CurrentUser } from 'src/utility/decorators/current-user.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -38,6 +39,9 @@ export class UsersController {
   async findOne(@Param('id') id: string): Promise<UserEntity>{
     return await  this.usersService.findOne(+id);
   }
+
+  @Get('me')
+  async getProfile(@CurrentUser() CurrentUser:UserEntity){}
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
