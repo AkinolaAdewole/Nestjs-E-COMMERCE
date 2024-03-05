@@ -42,7 +42,7 @@ export class UsersController {
 
   @Get('me')
   async getProfile(@CurrentUser() currentUser:UserEntity){
-    return currentUser;
+    return  currentUser;
   }
 
   @Patch(':id')
