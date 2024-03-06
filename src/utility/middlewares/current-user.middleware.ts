@@ -27,8 +27,10 @@ export class CurrentUserMiddleware implements NestMiddleware {
             // If any of the conditions are met, proceed with the next middleware in the chain
             req.currentUser = null;
             next();
+            return;
         } else {
-            // Extract the token from the authorization header
+            try {
+                 // Extract the token from the authorization header
             const token = authHeader.split(' ')[1];
             // Decode the JWT token and extract the user's id from it
             const { id } = <JwtPayload>verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
@@ -38,11 +40,18 @@ export class CurrentUserMiddleware implements NestMiddleware {
             req.currentUser = currentUser;
             // console.log(currentUser);
             // console.log(token);
+
+              // Pass control to the next middleware in the chain
+              next();
+            } catch (error) {
+                  // Pass control to the next middleware in the chain
+            next();
+            }
+           
             
             
 
-            // Pass control to the next middleware in the chain
-            next();
+          
         }
     }
 }
