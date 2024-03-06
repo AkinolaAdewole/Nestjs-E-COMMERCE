@@ -1,12 +1,19 @@
-import { Injectable, CanActivate, ExecutionContext } from "@nestjs/common";
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { Observable } from "rxjs";
 
 @Injectable()
 export class AuthorizeGuard implements CanActivate{
     constructor(private reflector:Reflector){}
-    canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-        const allowedRoles = this.reflector.get('allowedRoles',context.getHandler()); 
-        const request = context.switchToHttp().getRequest().       
+    canActivate(context: ExecutionContext): boolean{
+        const allowedRoles = this.reflector.get<string[]>('allowedRoles',context.getHandler()); 
+        const request = context.switchToHttp().getRequest();
+        const result = request?.currentUser?.roles.map((role:string)=>allowedRoles.includes(role)).
+        find((val:boolean)=>val===true);
+        if(result){
+            return true;
+        }else{
+            throw new UnauthorizedException('Sorry, You are not authorized');
+        }
     }
 }
