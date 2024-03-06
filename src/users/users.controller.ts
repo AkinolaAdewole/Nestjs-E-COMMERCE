@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -6,6 +6,7 @@ import { UserSignUpDto } from './dto/user-signup.dto';
 import { UserEntity } from './entities/user.entity';
 import { UserSignInDto } from './dto/user-signin.dto';
 import { CurrentUser } from 'src/utility/decorators/current-user.decorator';
+import { AuthenticationGuard } from 'src/utility/guards/authentication.guards';
 
 @Controller('users')
 export class UsersController {
@@ -40,6 +41,9 @@ export class UsersController {
     return await  this.usersService.findOne(+id);
   }
 
+
+  // Authentication
+  @UseGuards(AuthenticationGuard)
   @Get('me')
   async getProfile(@CurrentUser() currentUser:UserEntity){
     return  currentUser;
