@@ -1,4 +1,4 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from "@nestjs/common";
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, mixin } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { Observable } from "rxjs";
 
@@ -18,12 +18,9 @@ import { Observable } from "rxjs";
 //     }
 // }
 
-@Injectable()
 export const AuthorizeGuard =(allowedRoles:string[])=>{
     class RolesGuardMixin implements CanActivate{
-        constructor(private reflector:Reflector){}
         canActivate(context: ExecutionContext): boolean{
-            const allowedRoles = this.reflector.get<string[]>('allowedRoles',context.getHandler()); 
             const request = context.switchToHttp().getRequest();
             const result = request?.currentUser?.roles.map((role:string)=>allowedRoles.includes(role)).
             find((val:boolean)=>val===true);
@@ -35,5 +32,7 @@ export const AuthorizeGuard =(allowedRoles:string[])=>{
         }
     }
 }
+
+const guard = mixin(RolesGuardMixin)
 
 
