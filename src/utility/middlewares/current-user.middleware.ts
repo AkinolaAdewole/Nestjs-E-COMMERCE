@@ -28,6 +28,7 @@ export class CurrentUserMiddleware implements NestMiddleware {
             req.currentUser = null;
             next();
             return;
+            
         } else {
             try {
                  // Extract the token from the authorization header
