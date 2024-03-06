@@ -1,6 +1,6 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, mixin } from "@nestjs/common";
-import { Reflector } from "@nestjs/core";
-import { Observable } from "rxjs";
+import {CanActivate, ExecutionContext, UnauthorizedException, mixin } from "@nestjs/common";
+// import { Reflector } from "@nestjs/core";
+// import { Observable } from "rxjs";
 
 // @Injectable()
 // export class AuthorizeGuard implements CanActivate{
@@ -31,8 +31,10 @@ export const AuthorizeGuard =(allowedRoles:string[])=>{
             }
         }
     }
+    const guard = mixin(RolesGuardMixin);
+    return guard;
 }
 
-const guard = mixin(RolesGuardMixin)
+
 
 
