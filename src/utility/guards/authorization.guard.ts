@@ -19,20 +19,21 @@ import { Observable } from "rxjs";
 // }
 
 @Injectable()
-export const AuthorizeGuard =()=
-
-
-CanActivate{
-    constructor(private reflector:Reflector){}
-    canActivate(context: ExecutionContext): boolean{
-        const allowedRoles = this.reflector.get<string[]>('allowedRoles',context.getHandler()); 
-        const request = context.switchToHttp().getRequest();
-        const result = request?.currentUser?.roles.map((role:string)=>allowedRoles.includes(role)).
-        find((val:boolean)=>val===true);
-        if(result){
-            return true;
-        }else{
-            throw new UnauthorizedException('Sorry, You are not authorized');
+export const AuthorizeGuard =(allowedRoles:string[])=>{
+    class RolesGuardMixin implements CanActivate{
+        constructor(private reflector:Reflector){}
+        canActivate(context: ExecutionContext): boolean{
+            const allowedRoles = this.reflector.get<string[]>('allowedRoles',context.getHandler()); 
+            const request = context.switchToHttp().getRequest();
+            const result = request?.currentUser?.roles.map((role:string)=>allowedRoles.includes(role)).
+            find((val:boolean)=>val===true);
+            if(result){
+                return true;
+            }else{
+                throw new UnauthorizedException('Sorry, You are not authorized');
+            }
         }
     }
 }
+
+
