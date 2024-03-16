@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
+import { UserEntity } from "src/users/entities/user.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
 
 @Entity({name:'categories'}) 
@@ -13,6 +14,9 @@ export class CategoryEntity {
     createdAt:Timestamp;
     @UpdateDateColumn()
     updatedAt:Timestamp;
+
+    // User can create multiple categories
+    @ManyToOne(()=>UserEntity,(user)=>user.categories)
+    addedBy:UserEntity; 
 }
 
-// User can create multiple categories
