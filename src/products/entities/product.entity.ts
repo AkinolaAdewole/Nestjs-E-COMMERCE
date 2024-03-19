@@ -1,5 +1,5 @@
 import { Entity } from "typeorm";
 
 
-@Entity({})
-export class Product {}
+@Entity({name: "products"})
+export class ProductEntity {}
