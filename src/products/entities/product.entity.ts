@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { UserEntity } from "src/users/entities/user.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
 
 @Entity({name: "products"})
@@ -20,4 +21,13 @@ export class ProductEntity {
 
     @Column('simple-array')
     images:string[];
+
+    @CreateDateColumn()
+    createdAt:Timestamp;
+
+    @UpdateDateColumn()
+    updateAt:Timestamp;
+
+    @ManyToOne(()=>UserEntity,(user)=>user.products)
+    addeBy:UserEntity;
 }
