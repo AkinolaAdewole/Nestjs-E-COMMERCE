@@ -19,10 +19,10 @@ export class ProductsService {
   
     async create(createProductDto: CreateProductDto, currentUser:UserEntity):Promise<ProductEntity> {
 
-    const category = await this.categoryService.findOne(+createProductDto.categoryId);
+    const category = await this.categoryService.findOne(+createProductDto.categoryId,);
     const product = this.productRepository.create(createProductDto);
 
-    product.category = category;
+    product.category= category
     product.addedBy = currentUser;
 
     return await this.productRepository.save(product)
