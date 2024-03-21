@@ -7,12 +7,16 @@ import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGenerate
 export class CategoryEntity {
     @PrimaryGeneratedColumn()
     id:number;
+
     @Column()
     title:string;
+
     @Column()
     description:string;
+
     @CreateDateColumn()
     createdAt:Timestamp;
+    
     @UpdateDateColumn()
     updatedAt:Timestamp;
 

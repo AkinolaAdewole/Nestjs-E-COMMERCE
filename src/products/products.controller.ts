@@ -7,6 +7,7 @@ import { AuthorizeGuard } from 'src/utility/guards/authorization.guard';
 import { CurrentUser } from 'src/utility/decorators/current-user.decorator';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { ProductEntity } from './entities/product.entity';
+import { Roles } from 'src/utility/common/user-roles.enum';
 
 
 @Controller('products')
