@@ -6,6 +6,7 @@ import { AuthenticationGuard } from 'src/utility/guards/authentication.guards';
 import { AuthorizeGuard } from 'src/utility/guards/authorization.guard';
 import { CurrentUser } from 'src/utility/decorators/current-user.decorator';
 import { UserEntity } from 'src/users/entities/user.entity';
+import { ProductEntity } from './entities/product.entity';
 
 
 @Controller('products')
@@ -13,9 +14,12 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
 
-  @UseGuards(AuthenticationGuard,AuthorizeGuard([Roles.ADMIN]))
+  @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.ADMIN]))
   @Post()
-  async create(@Body() createProductDto: CreateProductDto, @CurrentUser() currentUser:UserEntity) {
+  async create(
+    @Body() createProductDto: CreateProductDto, 
+    @CurrentUser() currentUser:UserEntity
+  ):Promise<ProductEntity> {
     return await this.productsService.create(createProductDto, currentUser);
   }
 

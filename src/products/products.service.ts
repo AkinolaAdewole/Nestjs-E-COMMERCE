@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/product.entity';
 import { CategoriesService } from 'src/categories/categories.service';
 import { UserEntity } from 'src/users/entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ProductsService {
@@ -20,8 +21,10 @@ export class ProductsService {
 
     const category = await this.categoryService.findOne(+createProductDto.categoryId);
     const product = this.productRepository.create(createProductDto);
+
     product.category = category;
     product.addedBy = currentUser;
+
     return await this.productRepository.save(product)
   }
 
