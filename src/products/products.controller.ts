@@ -4,6 +4,8 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { AuthenticationGuard } from 'src/utility/guards/authentication.guards';
 import { AuthorizeGuard } from 'src/utility/guards/authorization.guard';
+import { CurrentUser } from 'src/utility/decorators/current-user.decorator';
+import { UserEntity } from 'src/users/entities/user.entity';
 
 
 @Controller('products')
@@ -13,7 +15,7 @@ export class ProductsController {
 
   @UseGuards(AuthenticationGuard,AuthorizeGuard([Roles.ADMIN]))
   @Post()
-  async create(@Body() createProductDto: CreateProductDto) {
+  async create(@Body() createProductDto: CreateProductDto, @CurrentUser() currentUser:UserEntity) {
     return await this.productsService.create(createProductDto);
   }
 
