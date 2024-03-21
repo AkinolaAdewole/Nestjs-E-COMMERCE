@@ -16,7 +16,7 @@ export class ProductsController {
   @UseGuards(AuthenticationGuard,AuthorizeGuard([Roles.ADMIN]))
   @Post()
   async create(@Body() createProductDto: CreateProductDto, @CurrentUser() currentUser:UserEntity) {
-    return await this.productsService.create(createProductDto);
+    return await this.productsService.create(createProductDto, currentUser);
   }
 
   @Get()
