@@ -16,6 +16,15 @@ export class CategoriesService {
     return `This action returns a #${id} category`;
   }
 
+
+  // async findOne(id: number): Promise<CategoryEntity> {
+  //   const category = await this.categoryRepository.findOne(id);
+  //   if (!category) {
+  //     throw new NotFoundException(`Category with ID ${id} not found`);
+  //   }
+  //   return category;
+  // }
+
   update(id: number, updateCategoryDto: UpdateCategoryDto) {
     return `This action updates a #${id} category`;
   }
