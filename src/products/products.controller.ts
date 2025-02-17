@@ -1,3 +1,4 @@
+// Import necessary decorators and classes from the @nestjs/common package
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
