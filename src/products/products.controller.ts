@@ -14,8 +14,12 @@ import { Roles } from 'src/utility/common/user-roles.enum';
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
-
-
+    /**
+   * Handle the HTTP POST request to create a new product
+   * @UseGuards ensures the user is authenticated and has admin privileges
+   * @Body is used to retrieve the product data from the request's body
+   * @CurrentUser is used to retrieve the current authenticated user
+   */
   @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.ADMIN]))
   @Post()
   async create(
