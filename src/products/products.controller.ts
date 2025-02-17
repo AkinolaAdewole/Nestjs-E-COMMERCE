@@ -23,7 +23,7 @@ export class ProductsController {
   @UseGuards(AuthenticationGuard, AuthorizeGuard([Roles.ADMIN]))
   @Post()
   async create(
-    @Body() createProductDto: CreateProductDto, 
+    @Body() createProductDto: CreateProductDto, // Product data from the request body
     @CurrentUser() currentUser:UserEntity
   ):Promise<ProductEntity> {
     return await this.productsService.create(createProductDto, currentUser);
