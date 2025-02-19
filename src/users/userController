@@ -1,0 +1,42 @@
+UsersService: This service contains the business logic for managing users.
+DTOs (Data Transfer Objects):
+CreateUserDto, UpdateUserDto, UserSignUpDto, UserSignInDto: These define the structure of the data for creating, updating, signing up, or signing in a user.
+Entities:
+UserEntity: Represents the user entity, likely tied to a database table.
+Authentication/Authorization Decorators & Guards:
+AuthenticationGuard: Ensures that only authenticated users can access certain routes.
+AuthorizeRoles and AuthorizeGuard: These are used to enforce role-based access control. Roles is an enum defining different user roles (e.g., ADMIN, USER).
+UsersController:
+
+This controller is mapped to the /users route. All routes within it start with /users.
+Sign-Up (signup):
+
+The @Post('signup') method handles user registration. It receives user sign-up data (UserSignUpDto), calls usersService.signup(), and returns the newly created user wrapped in an object.
+Sign-In (signin):
+
+The @Post('signin') method handles user login. It receives sign-in data (UserSignInDto), authenticates the user, generates an access token, and returns both the token and the authenticated user.
+Create User (create):
+
+The @Post() method (just /users) is a placeholder for creating a new user. It receives user data (CreateUserDto) but currently just returns a placeholder string hey. It likely needs further implementation to actually create a user.
+Find All Users (findAll):
+
+The @Get('all') method is protected with guards (AuthenticationGuard and AuthorizeGuard for Roles.ADMIN), meaning only authenticated users with the ADMIN role can access it. It retrieves and returns all users from the database using usersService.findAll().
+Find One User by ID (findOne):
+
+The @Get('single/:id') method retrieves a single user by ID from the database using usersService.findOne(). 
+The ID is captured as a route parameter (@Param('id')).
+Get Current User Profile (getProfile):
+
+The @Get('me') method returns the current authenticated user's profile. It uses the AuthenticationGuard and the @CurrentUser decorator to inject the currently authenticated user.
+Update User (update):
+
+The @Patch(':id') method updates a user's information by their ID. It receives the user ID as a route parameter (@Param('id')) and the updated data in the request body (@Body()).
+Delete User (remove):
+
+The @Delete(':id') method removes a user by their ID, again receiving the ID as a route parameter (@Param('id')).
+Key Features:
+Authentication: The AuthenticationGuard ensures that only logged-in users can access specific routes.
+Authorization: Some routes are protected by role-based guards (AuthorizeGuard with Roles.ADMIN), meaning only users with the required roles can access them.
+DTOs: These ensure that only valid data structures are accepted for user creation, updating, signing up, and signing in.
+Service Integration: The UsersController delegates business logic to the UsersService for tasks such as sign-up, sign-in, fetching users, and updating/removing users.
+In summary, this UsersController manages user-related functionalities (sign-up, sign-in, CRUD operations), using guards for authentication and role-based authorization, and relies on a service to handle the core logic.
