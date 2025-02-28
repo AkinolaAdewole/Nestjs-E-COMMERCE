@@ -1,31 +1,29 @@
 import { ProductEntity } from "src/products/entities/product.entity";
 import { UserEntity } from "src/users/entities/user.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-
-@Entity({name:'categories'}) 
+@Entity({ name: 'categories' })
 export class CategoryEntity {
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
 
     @Column()
-    title:string;
+    title: string;
 
-    @Column()
-    description:string;
+    @Column({ nullable: true }) // Allow null values
+    description?: string;
 
     @CreateDateColumn()
-    createdAt:Timestamp;
+    createdAt: Date; // Changed to Date type
     
     @UpdateDateColumn()
-    updatedAt:Timestamp;
+    updatedAt: Date; // Changed to Date type
 
     // User can create multiple categories
-    @ManyToOne(()=>UserEntity,(user)=>user.categories)
-    addedBy:UserEntity; 
+    @ManyToOne(() => UserEntity, (user) => user.categories, { onDelete: "CASCADE" }) 
+    addedBy: UserEntity;
 
-    // product can have many category
-    @OneToMany(()=>ProductEntity,(prod)=>prod.category)
-    products:ProductEntity[];
+    // A category can have multiple products
+    @OneToMany(() => ProductEntity, (prod) => prod.category)
+    products: ProductEntity[];
 }
-
